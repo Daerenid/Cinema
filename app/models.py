@@ -11,7 +11,7 @@ class Cinema(db.Model):
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(104))
+    username = db.Column(db.String(104))
     password_hash = db.Column(db.String(128))
     email = db.Column(db.String(104))
 
@@ -20,7 +20,6 @@ class Film(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(104))
     repertoire = db.Column(db.String(1048))
-    image_film = db.Column(db.String(50))
     duration = db.Column(db.Integer)
     status = db.Column(db.Boolean, default=False)
     vote_count = db.Integer(db.Column(db.Integer))
