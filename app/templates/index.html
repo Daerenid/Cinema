@@ -7,6 +7,21 @@
     <title>Document</title>
 </head>
 <body>
-    
+    {% for cinema in cinemas %}
+    kino: <br>
+        {{ cinema.name }} <br>
+        _________ <br>
+        filmy w tym kinie: <br>
+        {% for film in cinema.films %}
+            opis filmu: <br>
+
+            {{ film.name }}<br>
+            {{ film.repertoire }}<br>
+            {{ film.duration }}<br>
+            {{ film.status }}<br>
+            {{ film.vote_count }}<br>
+            ______________ <br>
+        {% endfor %}    
+    {% endfor %}
 </body>
 </html>

@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, validators, SubmitField
-from wtforms.validators import DataRequired, ValidationError
+from wtforms import StringField, PasswordField, validators, SubmitField, IntegerField
+from wtforms.validators import DataRequired, ValidationError, Email
 from app.models import User
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired('Pole wymagane!')])
-    password = PasswordField('Password', validators=[DataRequired('Pole wymagane!')])
-    submit = SubmitField('Sign In')
+    username_login = StringField('Username', validators=[DataRequired('Pole wymagane!')])
+    password_login = PasswordField('Password', validators=[DataRequired('Pole wymagane!')])
+    submit_login = SubmitField('Sign In')
     
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
@@ -14,11 +14,12 @@ class LoginForm(FlaskForm):
             raise ValidationError('Podana nazwa użytkownika nie istnieje')
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired('Pole wymagane!')])
-    email = StringField('Email Address', validators=[DataRequired('Pole wymagane!'), Email('Niepoprawny adres email')])
-    password = PasswordField('Password', [
+    username_register = StringField('Username', validators=[DataRequired('Pole wymagane!')])
+    email_register = StringField('Email Address', validators=[DataRequired('Pole wymagane!'), Email('Niepoprawny adres email')])
+    password_register = PasswordField('Password', [
         validators.DataRequired('Pole wymagane!')])
-
+    submit_register = SubmitField('Dodaj')
+    
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
@@ -29,10 +30,11 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Wybrany adres email jest już zajęty')
 
-class NewFilm(FlaskForm):
-    name = StringField('Nazwa', validators=[DataRequired()])
-    repertoire = StringField('Repertuar')
-    
-
 class NewCinema(FlaskForm):
-    name = StringField('Nazwa', validators=[DataRequired()])
+    name_cinema = StringField('Nazwa', validators=[DataRequired()])
+    submit = SubmitField('Dodaj')
+class NewFilm(FlaskForm):
+    name_film = StringField('Nazwa', validators=[DataRequired()])
+    repertoire = StringField('Repertuar')
+    duration = StringField('Czas trwania')
+    submit = SubmitField('Dodaj')

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    {% if current_user.is_authenticated: %}
+        dodawanie kina
+        <form action="" method="POST" novalidate autocomplete="off">
+            {{ cinema_form.hidden_tag() }}
+            {{ cinema_form.name_cinema() }}
+            {{ cinema_form.submit() }}
+        </form>
+        {% for cinema in cinemas %}
+        kina: <br>
+            {{ cinema.name }}
+
+            <!-- w tym forze dodawanie filmów -->
+            <form action="/admin/id={{ cinema.id }}" method="POST" novalidate autocomplete="off">
+                Dodawanie filmu:
+                {{ film_form.hidden_tag() }}
+                {{ film_form.name_film() }}
+                {{ film_form.repertoire() }}
+                {{ film_form.duration() }}
+                {{ film_form.submit() }}
+            </form>
+            <!--  -->
+        {% endfor %}
+
+    {% else %}
+    login usera
+    <form action="" method="POST" novalidate autocomplete="off">
+        {{ login_form.hidden_tag() }}
+        {{ login_form.username_login() }}
+
+        {% for error in login_form.username_login.errors %}
+        <span class="error">{{ error }}</span>
+        {% endfor %}
+        
+        {{ login_form.password_login() }}
+
+        {% for error in login_form.password_login.errors %}
+        <span class="error">{{ error }}</span>
+        {% endfor %}
+
+        {{ login_form.submit_login() }}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </form>
+    rejestracja usera
+    <form action="" method="POST" novalidate autocomplete="off">
+        {{ register_form.hidden_tag() }}
+        {{ register_form.username_register() }}
+
+        {% for error in register_form.username_register.errors %}
+        <span class="error"> {{ error }} </span>
+        {% endfor %}
+
+        {{ register_form.email_register() }}
+
+        {% for error in register_form.email_register.errors %}
+        <span class="error"> {{ error }} </span>
+        {% endfor %}
+
+        {{ register_form.password_register() }}
+
+        {% for error in register_form.password_register.errors %}
+        <span class="error"> {{ error }} </span>
+        {% endfor %}
+
+        {{ register_form.submit_register() }}
+    </form>
+
+    {% endif %}
+
+    
+    <a href="/logout">WYLOGUJ</a>
+</body>
+</html>
