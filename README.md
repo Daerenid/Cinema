@@ -31,3 +31,7 @@ Python 3.10.2
 >> flask run
 ```
 
+7. Dodanie rekordów do bazy danych (nowy terminal z odpalonym wirtualnym środowiskiem)
+```
+>> python basicDB.py
+```
