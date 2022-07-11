@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for
 from app.forms import LoginForm, RegistrationForm, NewFilm, NewCinema
 from app.models import User, Film, Cinema
 from flask_login import login_user, current_user, logout_user
-
+import json
 
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
@@ -71,3 +71,25 @@ def admin(id=None):
 def logout():
     logout_user()
     return redirect('/')
+
+@app.route('/cinemas')
+def cinemas():
+    return json.dumps(Cinema.get_cinemas())
+
+@app.route('/movies/<cinema_id>')
+def movies(cinema_id):
+    cinema = Cinema.get_cinema(cinema_id)
+    if(cinema == None):
+        return json.dumps({'error': 'Cinema not found'})
+    return json.dumps(cinema.films)
+
+@app.route('/movies_upvote/<id>')
+def upvote_movie(id):
+    film = Film.get_film(id)
+    if(film == None):
+        return json.dumps({'error': 'Film not found'})
+    if(film.vote_count == None):
+        film.vote_count = 0;
+    film.vote_count += 1;
+    db.session.commit()
+    return json.dumps(film)
