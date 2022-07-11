@@ -14,7 +14,6 @@ class Cinema(db.Model):
         db.session.add(film)
         db.session.commit()
 
-
     def add_cinema(self):
         db.session.add(self)
         db.session.commit()
