@@ -14,24 +14,23 @@ Python 3.10.2
 ```
 >> pip install -r requirements.txt
 ```
-4. Ustawienie flask
-```
->> set FLASK_ENV=development
->> set FLASK_APP=run.py
-```
-5. Baza danych
+4. Baza danych
 ```
 >> flask db init
 >> flask db migrate
 >> flask db upgrade
 ```
-
-6. Odpalanie aplikacji
-```
->> flask run
-```
-
-7. Dodanie rekordów do bazy danych (nowy terminal z odpalonym wirtualnym środowiskiem)
+5. Dodanie rekordów do bazy danych (nowy terminal z odpalonym wirtualnym środowiskiem)
 ```
 >> python basicDB.py
+```
+6. Ustawienie flask
+```
+>> set FLASK_ENV=development
+>> set FLASK_APP=run.py
+```
+
+7. Uruchomienie aplikacji
+```
+>> flask run
 ```
