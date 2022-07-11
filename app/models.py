@@ -1,7 +1,5 @@
-from app import db, login
+from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
-
 
 class Cinema(db.Model):
     __tablename__ = 'cinema'
@@ -26,32 +24,20 @@ class Cinema(db.Model):
     def get_cinema(id):
         return Cinema.query.get(int(id))
 
-class User(UserMixin, db.Model):
-    __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(104))
-    password_hash = db.Column(db.String(128))
-    email = db.Column(db.String(104))
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-    
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-    @login.user_loader
-    def load_user(id):
-        return User.query.get(int(id))
-
-    def add_user(self):
-        db.session.add(self)
-        db.session.commit()
 class Film(db.Model):
     __tablename__ = 'film'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(104))
-    repertoire = db.Column(db.String(1048))
-    duration = db.Column(db.Integer)
-    status = db.Column(db.Boolean, default=False)
-    vote_count = db.Column(db.Integer)
+    description = db.Column(db.String(1048))
+    vote_count = db.Column(db.Integer, default=0)
+    posterurl = db.Column(db.Text())
+    movieurl = db.Column(db.String(1048))
     cinema_id = db.Column(db.Integer, db.ForeignKey('cinema.id'))
+
+    def add_film(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def upp_vote(self):
+        self.vote_count += 1
+        db.session.commit()
